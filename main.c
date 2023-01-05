@@ -1,36 +1,27 @@
-#include <stdio.h>
-#include <string.h>
-#include <limits.h>
-#include <unistd.h>
-#include <stdlib.h>
-
-const char *get_path(char *path, const char *cmd)
-{
-	char *new_cmd;
-
-	if (strchr(cmd, '/'))
-		return cmd;
-	new_cmd = calloc(1, PATH_MAX);
-	if (!new_cmd)
-		return ((void *)0);
-	char *token = strtok(path, ":");
-	int step = 0;
-	while (token)
-	{
-		strlcat(new_cmd, token, PATH_MAX);
-		strlcat(new_cmd, "/", PATH_MAX);
-		strlcat(new_cmd, cmd, PATH_MAX);
-		if (!access(new_cmd, X_OK))
-			return new_cmd;
-		token = strtok(NULL, ":");
-		new_cmd[0] = 0x0;
-	}
-	return (void *)0;
-}
+#include "pipex.h"
 
 int main()
 {
-	char path[] = "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki";
-
-	printf("path -> %s\n", get_path(path, "ls"));
+	int fd[2];
+	int pid;
+	pipe(fd);
+	pid = fork();
+	if (!pid)
+	{
+		close(fd[1]);
+		char buff[0xff];
+		int nbyte = 0;
+		while ((nbyte = read(fd[0], buff, 0xff - 1)) > 0)
+			write(1, buff, nbyte);
+		return 0;
+	}
+	int file = open("pipex.h", O_RDONLY);
+	int nbyte = 0;
+	char buff[0xff];
+	while ((nbyte = read(file, buff, 0xff - 1)) > 0)
+		write(fd[1], buff, nbyte);
+	close(fd[0]);
+	close(fd[1]);
+	close(file);
+	wait(NULL);
 }
