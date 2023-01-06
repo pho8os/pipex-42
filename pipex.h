@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include<fcntl.h>
-#include "lib-ft/libft.h"
+#include "libft/libft.h"
 
 #define CMD_NODE 1
 #define PIPE_NODE 2
@@ -36,12 +36,12 @@ typedef struct s_pipeline {
 } t_pipeline;
 
 // parser functions
-t_ast *parser(char **, int);
+t_ast *parser(char **, int, char *);
 
 // executor functions
-void executor(t_ast *);
+void executor(t_ast *,char **);
 
-const char *get_path(char *path, const char *cmd);
+char *get_path(char *path, char *cmd);
 
 
 #endif

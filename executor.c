@@ -6,7 +6,7 @@
 /*   By: absaid <absaid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 10:34:03 by absaid            #+#    #+#             */
-/*   Updated: 2023/01/05 12:20:36 by absaid           ###   ########.fr       */
+/*   Updated: 2023/01/06 02:35:48 by absaid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,6 @@ static void close_pipe(int fds[2])
 	close(fds[WRITE_END]);
 }
 
-void executor(t_ast *tree, char **env) {
-  if (!tree) return;
-  if (tree->type == CMD_NODE) run_cmd((t_cmdlist *)tree,env);
-  if (tree->type == PIPE_NODE) run_pipeline((t_pipeline *)tree, env);
-}
 
 static pid_t run_pipe(t_ast *pipeline, int fds[2], int side, char **env)
 {
@@ -80,4 +75,12 @@ static void run_pipeline(t_pipeline *pipleine, char **env)
 	close_pipe(fds);
 	wait(&status);
 	wait(&status);
+}
+
+void executor(t_ast *tree, char **env) {
+  if (!tree) return;
+  if (tree->type == CMD_NODE) 
+  	run_cmd((t_cmdlist *)tree,env);
+  if (tree->type == PIPE_NODE) 
+  	run_pipeline((t_pipeline *)tree, env);
 }
