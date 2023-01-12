@@ -6,7 +6,7 @@
 /*   By: absaid <absaid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 08:56:33 by absaid            #+#    #+#             */
-/*   Updated: 2023/01/06 02:43:26 by absaid           ###   ########.fr       */
+/*   Updated: 2023/01/12 04:46:37 by absaid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static char	*get_line(char *hold)
 	i = 0;
 	while (hold[i] && hold[i] != '\n')
 		i++;
-	s = ft_substr_gnl(hold, 0, i + 1);
+	s = ft_substr_gnl(hold, 0, i);
 	return (s);
 }
 
