@@ -10,7 +10,7 @@ int heredoc(char *delim) {
 	while (1) 
 	{
     	buff = get_next_line(0);
-    	if (!buff || ft_memcmp(delim, buff, len + 1) == 0) 
+    	if (!buff || ft_memcmp(delim, buff, len) == 0) 
 			break;
     	write(hfd[WRITE_END], buff, ft_strlen(buff));
     	write(hfd[WRITE_END], "\n", 1);
