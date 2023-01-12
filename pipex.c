@@ -10,7 +10,6 @@ int heredoc(char *delim) {
 	while (1) 
 	{
     	buff = get_next_line(0);
-    	// buff = str.c_str();
     	if (!buff || ft_memcmp(delim, buff, len + 1) == 0) 
 			break;
     	write(hfd[WRITE_END], buff, ft_strlen(buff));
@@ -49,11 +48,11 @@ int main(int ac, char **av, char **env)
       		infile = open(av[1], O_RDONLY);
       		flags |= O_TRUNC;
     	}
-    		int outfile = open(av[ac - 1], flags, 0644);
-    		dup2(infile, STDIN_FILENO);
-    		dup2(outfile, STDOUT_FILENO);
-
-    		t_ast *tree = parser(av + 2, ac - 3,pathget(env));
-			executor(tree,env);
+		int outfile = open(av[ac - 1], flags, 0644);
+		dup2(infile, STDIN_FILENO);
+		dup2(outfile, STDOUT_FILENO);
+		t_ast *tree = parser(av + 2, ac - 3,pathget(env));
+		// dump_dot(tree);
+		executor(tree,env);
 	}
 }

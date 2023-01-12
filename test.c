@@ -1,44 +1,41 @@
-#include"pipex.h"
-static char *ft_strtok(char *s, char specifier)
-{
-	static char *buffer;
-	char *token;
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   test.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: absaid <absaid@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/12 02:47:15 by absaid            #+#    #+#             */
+/*   Updated: 2023/01/12 02:47:25 by absaid           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-	if (!buffer)
-		buffer = s;
-	if (!*buffer)
-		return NULL;
-	token = buffer;
-	while (*buffer && *buffer != specifier)
-		buffer++;
-	while(*buffer == specifier && *buffer)
-	{
-		*buffer = 0;
-		buffer++;
-	}		
-	return(token);
-}
+#include"pipex.h"
+
 
 char *get_path(char *path, char *cmd)
 {
 	char	*new_cmd;
-	char	*token;
+	char	**token;
+	int i;
 
 	if (ft_strchr(cmd,'/'))
 		return cmd;
+	token = ft_split(path,':');
 	new_cmd = ft_calloc(1, PATH_MAX);
 	if (!new_cmd)
 		return ((void *)0);
-	token = ft_strtok(path, ':');
-	while (token)
+	i = -1;
+	while (token[++i])
 	{
-		ft_strlcat(new_cmd, token, PATH_MAX);
+		ft_strlcat(new_cmd, token[i], PATH_MAX);
 		ft_strlcat(new_cmd, "/", PATH_MAX);
 		ft_strlcat(new_cmd, cmd, PATH_MAX);
 		if (!access(new_cmd, X_OK))
 			return (new_cmd);
-		token = ft_strtok(NULL, ':');
-		new_cmd[0] = 0x0;
+		free(new_cmd);
+		new_cmd = ft_calloc(1, PATH_MAX);
 	}
-	return (void *)0;
+	return (NULL);
+
 }

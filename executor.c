@@ -6,7 +6,7 @@
 /*   By: absaid <absaid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 10:34:03 by absaid            #+#    #+#             */
-/*   Updated: 2023/01/06 02:35:48 by absaid           ###   ########.fr       */
+/*   Updated: 2023/01/12 03:16:43 by absaid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,9 @@ static pid_t run_pipe(t_ast *pipeline, int fds[2], int side, char **env)
 
 static void run_pipeline(t_pipeline *pipleine, char **env) 
 {
-	int status;
-	int pids[2];int fds[2];
+	// int status;
+	int pids[2];
+	int fds[2];
 
 	if (pipe(fds) == -1)
 		return;
@@ -73,8 +74,8 @@ static void run_pipeline(t_pipeline *pipleine, char **env)
 	if (pids[1] == -1)
 		return;
 	close_pipe(fds);
-	wait(&status);
-	wait(&status);
+	// wait(&status);
+	// wait(&status);
 }
 
 void executor(t_ast *tree, char **env) {

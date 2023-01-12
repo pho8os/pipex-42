@@ -6,7 +6,7 @@
 /*   By: absaid <absaid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 11:04:59 by absaid            #+#    #+#             */
-/*   Updated: 2023/01/05 21:24:54 by absaid           ###   ########.fr       */
+/*   Updated: 2023/01/12 02:50:45 by absaid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ static t_ast *parse_command(char *path, char *command)
 	
 	len = 0;
 	av = ft_split(command,32);
-	av[0] = get_path(path,command);
-	if(!av[0])
+	*av = get_path(path,*av);
+	if(!*av)
 		return (NULL);
 	while(av[len])
 		len++;
