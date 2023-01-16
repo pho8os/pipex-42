@@ -6,7 +6,7 @@
 /*   By: absaid <absaid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 10:34:03 by absaid            #+#    #+#             */
-/*   Updated: 2023/01/12 03:16:43 by absaid           ###   ########.fr       */
+/*   Updated: 2023/01/16 01:18:51 by absaid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ static void close_pipe(int fds[2])
 }
 
 
-static pid_t run_pipe(t_ast *pipeline, int fds[2], int side, char **env)
+static pid_t	run_pipe(t_ast *pipeline, int fds[2], int side, char **env)
 {
-	pid_t pid;
-	int end;
-	int fileno;
+	pid_t	pid;
+	int		end;
+	int		fileno;
 	
 	end = WRITE_END;
 	fileno = STDOUT_FILENO;
@@ -61,7 +61,6 @@ static pid_t run_pipe(t_ast *pipeline, int fds[2], int side, char **env)
 
 static void run_pipeline(t_pipeline *pipleine, char **env) 
 {
-	// int status;
 	int pids[2];
 	int fds[2];
 
@@ -74,14 +73,16 @@ static void run_pipeline(t_pipeline *pipleine, char **env)
 	if (pids[1] == -1)
 		return;
 	close_pipe(fds);
-	// wait(&status);
-	// wait(&status);
+	wait(NULL);
+	wait(NULL);
 }
 
-void executor(t_ast *tree, char **env) {
-  if (!tree) return;
-  if (tree->type == CMD_NODE) 
-  	run_cmd((t_cmdlist *)tree,env);
-  if (tree->type == PIPE_NODE) 
-  	run_pipeline((t_pipeline *)tree, env);
+void executor(t_ast *tree, char **env) 
+{
+	if (!tree) 
+		return;
+	if (tree->type == CMD_NODE) 
+		run_cmd((t_cmdlist *)tree,env);
+	if (tree->type == PIPE_NODE) 
+		run_pipeline((t_pipeline *)tree, env);
 }

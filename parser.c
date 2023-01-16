@@ -6,7 +6,7 @@
 /*   By: absaid <absaid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 11:04:59 by absaid            #+#    #+#             */
-/*   Updated: 2023/01/12 02:50:45 by absaid           ###   ########.fr       */
+/*   Updated: 2023/01/16 01:41:31 by absaid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,12 @@ static t_ast *parse_command(char *path, char *command)
 	av = ft_split(command,32);
 	*av = get_path(path,*av);
 	if(!*av)
+	{
+		//free av;
+		ft_putstr_fd(command, 2);
+		ft_putendl_fd(" : command not found",2);
 		return (NULL);
+	}
 	while(av[len])
 		len++;
 	cmdlist = cmdlist_constructor(av,len);

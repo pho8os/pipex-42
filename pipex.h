@@ -44,4 +44,5 @@ void executor(t_ast *,char **);
 char *get_path(char *path, char *cmd);
 
 void dump_dot(t_ast *tree);
+
 #endif
