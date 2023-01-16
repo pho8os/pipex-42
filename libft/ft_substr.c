@@ -6,7 +6,7 @@
 /*   By: absaid <absaid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 07:27:06 by absaid            #+#    #+#             */
-/*   Updated: 2022/10/22 17:38:38 by absaid           ###   ########.fr       */
+/*   Updated: 2023/01/16 18:36:41 by absaid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	i = 0;
 	if (len > slen)
 		len = slen;
-	str = malloc(len + 1);
+	str = gc(len + 1, 1);
 	if (!str)
 		return (NULL);
 	slen = ft_strlen(s);

@@ -6,26 +6,30 @@
 /*   By: absaid <absaid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 00:54:37 by absaid            #+#    #+#             */
-/*   Updated: 2023/01/16 04:30:24 by absaid           ###   ########.fr       */
+/*   Updated: 2023/01/16 20:24:45 by absaid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"pipex.h"
 
+void ff(void )
+{
+	system("leaks pipex");
+}
 char *get_path(char *path, char *cmd)
 {
 	char	*new_cmd;
 	char	**token;
 	int i;
 
-	if(!path)
+	if(!path || !cmd)
 		return(NULL);
 	if (ft_strchr(cmd,'/'))
 		return cmd;
 	token = ft_split(path,':');
 	new_cmd = ft_calloc(1, PATH_MAX);
 	if (!new_cmd)
-		return ((void *)0);
+		return (gc(0,0));
 	i = -1;
 	while (token[++i])
 	{
@@ -34,7 +38,6 @@ char *get_path(char *path, char *cmd)
 		ft_strlcat(new_cmd, cmd, PATH_MAX);
 		if (!access(new_cmd, X_OK))
 			return (new_cmd);
-		free(new_cmd);
 		new_cmd = ft_calloc(1, PATH_MAX);
 	}
 	return (NULL);
@@ -71,13 +74,13 @@ char *pathget(char **env)
 	return (NULL);
 }
 
-int	main(int ac, char **av, char **env)
+int	_main(int ac, char **av, char **env)
 {
 	int infile;
 	int flags = O_WRONLY | O_CREAT;
 	int outfile;
 	t_ast *tree;
-	
+
 	if (ac >= 5) 
 	{
 
@@ -91,7 +94,7 @@ int	main(int ac, char **av, char **env)
 		{
 	  		infile = open(av[1], O_RDONLY);
 			if(infile < 0)
-				return(perror("file"),0);
+				return(perror(av[1]),0);
 	  		flags |= O_TRUNC;
 		}
 		outfile = open(av[ac - 1], flags, 0644);
@@ -100,5 +103,14 @@ int	main(int ac, char **av, char **env)
 		tree = parser(av + 2, ac - 3,pathget(env));
 		// dump_dot(tree);
 		executor(tree,env);
+		gc(0,0);
 	}
+	return(0);
+}
+
+int main(int ac, char **av, char **env)
+{
+	_main(ac,av,env);
+	while(1);
+	
 }

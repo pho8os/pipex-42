@@ -6,7 +6,7 @@
 /*   By: absaid <absaid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 11:21:22 by absaid            #+#    #+#             */
-/*   Updated: 2022/10/21 14:15:06 by absaid           ###   ########.fr       */
+/*   Updated: 2023/01/16 18:58:33 by absaid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	ft_lstclear(t_list **lst, void (*del)(void *))
 	{
 		t = tmp;
 		tmp = tmp->next;
-		del(t -> content);
+		if(t->content)
+			del(t -> content);
 		free(t);
 	}
 	*lst = NULL;

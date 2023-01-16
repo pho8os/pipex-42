@@ -18,7 +18,7 @@ libft/libft.a:
 	$(CC) $(CFLAGS) -c $<
 
 $(NAME):$(OBJS) libft/libft.a
-	$(CC) $(CFLAGS) $(OBJS) libft/libft.a -o $(NAME) -fsanitize=address
+	$(CC) $(CFLAGS) $(OBJS) libft/libft.a -o $(NAME) 
 
 clean:
 	rm -f $(OBJS) $(BONUSOBJS)

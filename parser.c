@@ -6,7 +6,7 @@
 /*   By: absaid <absaid@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 11:04:59 by absaid            #+#    #+#             */
-/*   Updated: 2023/01/16 01:41:31 by absaid           ###   ########.fr       */
+/*   Updated: 2023/01/16 18:51:25 by absaid           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static t_ast *pipeline_constructor(t_ast *left, t_ast *right) 
 {	
-	t_pipeline *node = (t_pipeline *)malloc(sizeof(t_pipeline));
+	t_pipeline *node = (t_pipeline *)gc(sizeof(t_pipeline), 1);
 	if (!node) 
-		return (NULL);
+		return (gc(0,0));
 	node->type = PIPE_NODE;
 	node->left = left;
 	node->right = right;
@@ -24,9 +24,9 @@ static t_ast *pipeline_constructor(t_ast *left, t_ast *right)
 }
 static t_ast *cmdlist_constructor(char **av, size_t len) 
 {
-	t_cmdlist *node = (t_cmdlist *)malloc(sizeof(t_cmdlist));
+	t_cmdlist *node = (t_cmdlist *)gc(sizeof(t_cmdlist), 1);
 	if (!node) 
-		return (NULL);
+		return (gc(0,0));
 	node->type = CMD_NODE;
 	node->av = av;
 	node->len = len;
@@ -41,13 +41,14 @@ static t_ast *parse_command(char *path, char *command)
 	
 	len = 0;
 	av = ft_split(command,32);
+	if(!av)
+		return(gc(0,0));
 	*av = get_path(path,*av);
 	if(!*av)
 	{
-		//free av;
 		ft_putstr_fd(command, 2);
 		ft_putendl_fd(" : command not found",2);
-		return (NULL);
+		return (gc(0,0));
 	}
 	while(av[len])
 		len++;
