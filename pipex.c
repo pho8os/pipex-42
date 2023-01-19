@@ -51,11 +51,7 @@ int	heredoc(char *delim)
 	while (1)
 	{
 		buff = get_next_line(0);
-		if((int)ft_strlen(buff) > len)
-			len = ft_strlen(buff);
-		else 
-			len = ft_strlen(delim);
-		if (!buff || !ft_memcmp(delim, buff, len))
+		if (!buff || !ft_memcmp(delim, buff, len + 1))
 			break ;
 		write(hfd[WRITE_END], buff, ft_strlen(buff));
 		write(hfd[WRITE_END], "\n", 1);
